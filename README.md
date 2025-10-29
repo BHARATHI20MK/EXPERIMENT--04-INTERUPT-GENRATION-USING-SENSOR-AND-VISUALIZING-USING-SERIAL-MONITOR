@@ -415,11 +415,11 @@ void assert_failed(uint8_t *file, uint32_t line)
 
 ## Circuit board :
 ### Obstacle not detected
-<img width="728" height="331" alt="image" src="https://github.com/user-attachments/assets/44670678-f232-496f-a85d-720237bd258f" />
+<img width="712" height="367" alt="image" src="https://github.com/user-attachments/assets/46139f37-4b97-4ab6-9ba1-7d07ab728949" />
 
 
 ### Obstacle detected
-<img width="713" height="317" alt="image" src="https://github.com/user-attachments/assets/7648dca5-387c-4d3e-959b-bdc6be71fb9a" />
+<img width="696" height="294" alt="image" src="https://github.com/user-attachments/assets/fad0e634-ea74-400a-983d-40e3a5fd777b" />
 
 
  
