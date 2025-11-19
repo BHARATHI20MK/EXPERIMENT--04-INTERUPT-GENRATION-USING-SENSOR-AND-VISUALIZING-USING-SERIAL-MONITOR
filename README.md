@@ -117,7 +117,7 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
   
 
 ## STM 32 CUBE PROGRAM :
-```c
+```
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -139,13 +139,13 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include"stdbool.h"
-#include "stdio.h"
+#include<stdio.h>
 bool IRSENSOR;
 void IRPAIR();
 static void MX_GPIO_Init(void);
-//#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
-//#define PUTCHAR_PROTOTYPE int fputc(int ch,FILE *f)
-#if defined(__GNUC__)
+#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif
 
@@ -161,6 +161,7 @@ static void MX_GPIO_Init(void);
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -194,6 +195,7 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -224,34 +226,34 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-    {
-  	  IRPAIR();
-    }
-    /* USER CODE END 3 */
-  }
-  void IRPAIR()
   {
-  IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
-  if(IRSENSOR==0)
-  {
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
-  	printf("Obstacle Detected\n");
-  HAL_Delay(1000);
-  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
-  //HAL_Delay(1000);
+	  IRPAIR();
   }
-  else
-  {
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
-  	printf("Obstacle Not Detected\n");
-  HAL_Delay(1000);
-  }
-  }
-  PUTCHAR_PROTOTYPE
-  {
-  HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
+  /* USER CODE END 3 */
+}
+void IRPAIR()
+{
+IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
+if(IRSENSOR==0)
+
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+printf("Obstacle Detected\n");
+HAL_Delay(1000);
+}
+else
+{
+HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+printf("Obstacle Not Detected\n");
+HAL_Delay(1000);
+}
+}
+
+PUTCHAR_PROTOTYPE
+{
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
   return ch;
-  }
+}
 
 /**
   * @brief System Clock Configuration
@@ -265,7 +267,8 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
-  /** Initializes the CPU, AHB and APB busses clocks
+
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_MSI;
   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
@@ -276,6 +279,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Configure the SYSCLKSource, HCLK, PCLK1 and PCLK2 clocks dividers
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK3|RCC_CLOCKTYPE_HCLK
@@ -349,6 +353,9 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -370,6 +377,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -390,8 +400,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
